@@ -5,6 +5,8 @@ import SignUp from "./pages/SignUp"
 import AllPost from "./pages/AllPost"
 import Post from "./pages/Post"
 import ErrorPage from "./pages/ErrorPage"
+import PostForm from "./pages/PostForm"
+import UserInfo from "./pages/UserInfo"
 import AuthLayout from "./components/AuthLayout/AuthLayout"
 
 const router = createBrowserRouter(
@@ -29,6 +31,14 @@ const router = createBrowserRouter(
         {
           path: '/post/:postId',
           element: <AuthLayout authenticated={false}> <Post /></AuthLayout>
+        },
+        {
+          path: '/createBlog',
+          element: <AuthLayout authenticated={false} > <PostForm /> </AuthLayout>
+        },
+        {
+          path: '/userInfo',
+          element: <AuthLayout authenticated={false}><UserInfo /></AuthLayout>
         }
       ]
     }
