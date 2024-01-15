@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { Input } from "../index"
-import { SubmitBtn } from "../index"
+import { Input, SubmitBtn, ProfileImage } from "../index"
 import { useForm } from "react-hook-form"
-import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -15,17 +13,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 export default function LoginForm() {
-  
-    const onSubmit = (data) => {
+
+  const onSubmit = (data) => {
     console.log(data)
-    };
-    
-    const { handleSubmit, control, formState: {errors} } = useForm({
-        defaultValues: {
-            email: "",
-            password: ""
-        }
-    });
+  };
+
+  const { handleSubmit, control, formState: { errors } } = useForm({
+    defaultValues: {
+      email: "",
+      password: ""
+    }
+  });
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -39,19 +37,17 @@ export default function LoginForm() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <ProfileImage />
           <Typography component="h1" variant="h5">
             Login
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-              <Input name='email' id='email' label='Email' type='email' control={control} errors={errors} />
+                <Input name='email' id='email' label='Email' type='email' control={control} errors={errors} />
               </Grid>
               <Grid item xs={12}>
-              <Input name='password' id='password' label='Password' type='password' control={control} errors={errors} />
+                <Input name='password' id='password' label='Password' type='password' control={control} errors={errors} />
               </Grid>
             </Grid>
             <SubmitBtn text="Login" />

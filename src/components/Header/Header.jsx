@@ -110,7 +110,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            <Link to="/signup">
+            <Link to="/">
               Blogify
             </Link>
           </Typography>
@@ -164,7 +164,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            <Link to="/signup">
+            <Link to="/">
               Blogify
             </Link>
           </Typography>

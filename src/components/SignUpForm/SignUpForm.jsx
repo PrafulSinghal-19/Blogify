@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { Input } from "../index"
-import { SubmitBtn } from '../index'
+import React, { useState } from 'react';
+import { Input, SubmitBtn, UploadFile, ProfileImage} from "../index"
 import { useForm } from "react-hook-form"
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';;
@@ -15,19 +14,22 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 export default function SignUpForm() {
-  
+
+  const [fileDataURL, setFileDataURL] = useState(null)
+
   const onSubmit = (data) => {
     console.log(data)
-    };
-    
-    const { handleSubmit, control, formState: {errors} } = useForm({
-        defaultValues: {
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: ""
-        }
-    });
+  };
+
+  const { handleSubmit, control, formState: { errors } } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      profileImage: null
+    }
+  });
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -41,9 +43,10 @@ export default function SignUpForm() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <label htmlFor="file">
+            <UploadFile setFileDataURL={setFileDataURL} name='profileImage' control={control} />
+            <ProfileImage imageUrl={fileDataURL} />
+          </label>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -53,13 +56,13 @@ export default function SignUpForm() {
                 <Input name='firstName' id='firstName' label='First Name' control={control} errors={errors} />
               </Grid>
               <Grid item xs={12} sm={6}>
-              <Input name='lastName' id='lastName' label='Last Name' control={control} errors={errors} />
+                <Input name='lastName' id='lastName' label='Last Name' control={control} errors={errors} />
               </Grid>
               <Grid item xs={12}>
-              <Input name='email' id='email' label='Email' type='email' control={control} errors={errors} />
+                <Input name='email' id='email' label='Email' type='email' control={control} errors={errors} />
               </Grid>
               <Grid item xs={12}>
-              <Input name='password' id='password' label='Password' type='password' control={control} errors={errors} />
+                <Input name='password' id='password' label='Password' type='password' control={control} errors={errors} />
               </Grid>
             </Grid>
             <SubmitBtn text='SignUp' />
