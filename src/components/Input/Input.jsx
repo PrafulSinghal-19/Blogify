@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 
-const Input = ({ name, required=true , id, label, control, errors, ...props }) => {
+const Input = ({ name, required=true , id, label, control, errors, autoFocus=false, ...props }) => {
 
   return (
     <Controller
@@ -16,7 +16,7 @@ const Input = ({ name, required=true , id, label, control, errors, ...props }) =
         fullWidth
         id={id}
         label={label}
-        autoFocus
+        autoFocus={autoFocus}
         {...props}
         onChange={onChange}
         helperText={ errors[name] ? errors[name].message : ""}

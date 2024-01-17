@@ -2,11 +2,11 @@ import React from 'react'
 
 const ProfileImage = ({ imageUrl = null }) => {
     
-    const dim = imageUrl ? 150 : 70;
+    const dim = imageUrl ? "150px" : "100px";
 
     imageUrl = imageUrl || 'src/assets/user.png';
     return (
-        <img src={imageUrl} alt="preview" className={`rounded-full h-[${dim}px] w-[${dim}px] mb-4`}/>
+        <img src={imageUrl} alt="preview" className={`rounded-full mb-4 hover:cursor-pointer`} style={{ height: dim, width: dim}} />
     )
 }
 

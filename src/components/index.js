@@ -2,6 +2,7 @@ import AuthLayout from './AuthLayout/AuthLayout';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
 import Input from './Input/Input';
+import Loader from './Loader/Loader';
 import LoginForm from './LoginForm/LoginForm'
 import LogoutBtn from './LogoutBtn/LogoutBtn';
 import PostCard from './PostCard/PostCard';
@@ -18,6 +19,7 @@ export {
     Footer,
     Header,
     Input,
+    Loader,
     LoginForm,
     LogoutBtn,
     PostCard,

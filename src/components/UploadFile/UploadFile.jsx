@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Controller } from 'react-hook-form';
+import React, { useState, useEffect, forwardRef } from 'react'
 
-export const UploadFile = ({ name, control, setFileDataURL }) => {
+export const UploadFile = forwardRef(function UploadFile({ setFileDataURL, onChange, onBlur, name }, ref) {
 
     const [file, setFile] = useState(null);
 
@@ -32,18 +31,20 @@ export const UploadFile = ({ name, control, setFileDataURL }) => {
     }
 
     return (
-        <Controller
+        <input
+            type="file"
+            id="file"
             name={name}
-            control={control}
-            render={({ field: { onChange } }) => <input
-                type="file"
-                id="file"
-                name="img"
-                accept="image/*"
-                style={{ display: 'none' }} onChange={(event) => {
-                    handleChange(event);
-                    onChange(event);
-                }} />}
+            accept="image/*"
+            ref={ref}
+            style={{ display: 'none' }}
+            onBlur={onBlur}
+            onChange={(event) => {
+                handleChange(event);
+                onChange(event);
+            }
+            }
         />
     )
 }
+) 

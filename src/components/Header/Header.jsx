@@ -11,11 +11,11 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import PersonIcon from '@mui/icons-material/Person';
 import { Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../../store/authSlice";
+import authService from "../../appwrite/auth";
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null | HTMLElement)
@@ -74,8 +74,15 @@ function Header() {
 
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async() => {
+    try {
+      await authService.logout();
+      dispatch(logout());
+    }
+    catch (error) {
+      console.log(error.message)
+    }
+    
   }
 
   const handleOpenNavMenu = (event) => {

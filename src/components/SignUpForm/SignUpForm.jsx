@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Input, SubmitBtn, UploadFile, ProfileImage} from "../index"
+import { Input, SubmitBtn, UploadFile, ProfileImage } from "../index"
 import { useForm } from "react-hook-form"
-import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';;
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch } from 'react-redux';
+import { login } from "../../store/authSlice";
+import authService from "../../appwrite/auth"
 
 const defaultTheme = createTheme();
 
@@ -17,17 +18,25 @@ export default function SignUpForm() {
 
   const [fileDataURL, setFileDataURL] = useState(null)
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const dispatch = useDispatch();
+
+  const onSubmit = async (data) => {
+    try {
+      const userId = await authService.signup({ ...data });
+      dispatch(login(userId));
+    }
+    catch (error) {
+      console.log(error.message);
+    }    
   };
 
-  const { handleSubmit, control, formState: { errors } } = useForm({
+  const { handleSubmit, control, register, watch, formState: { errors } } = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
       password: "",
-      profileImage: null
+      profileImage: []
     }
   });
 
@@ -44,7 +53,7 @@ export default function SignUpForm() {
           }}
         >
           <label htmlFor="file">
-            <UploadFile setFileDataURL={setFileDataURL} name='profileImage' control={control} />
+            <UploadFile setFileDataURL={setFileDataURL} {...register('profileImage')} />
             <ProfileImage imageUrl={fileDataURL} />
           </label>
           <Typography component="h1" variant="h5">
@@ -53,7 +62,7 @@ export default function SignUpForm() {
           <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <Input name='firstName' id='firstName' label='First Name' control={control} errors={errors} />
+                <Input name='firstName' id='firstName' label='First Name' autoFocus={true} control={control} errors={errors} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Input name='lastName' id='lastName' label='Last Name' control={control} errors={errors} />
