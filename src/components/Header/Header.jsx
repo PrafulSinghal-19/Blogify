@@ -22,7 +22,7 @@ function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null | HTMLElement);
   const [pages, setPages] = useState([]);
   const [settings, setSettings] = useState([]);
-  const userState = useSelector(state => state.auth.status);
+  const userState = useSelector(state => state.auth.userStatus);
 
   useEffect(() => { 
     if (userState) {

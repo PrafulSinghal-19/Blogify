@@ -18,7 +18,7 @@ export default function LoginForm() {
 
   const dispatch = useDispatch();
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     try {
       const userId = await authService.login({ ...data });
       dispatch(login(userId));

@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { login } from "../../store/authSlice";
 import authService from "../../appwrite/auth"
+import userAuth from '../../appwrite/auth';
 
 const defaultTheme = createTheme();
 
@@ -27,6 +28,12 @@ export default function SignUpForm() {
     }
     catch (error) {
       console.log(error.message);
+      try {
+        await userAuth.logout();
+      }
+      catch (error) {
+        console.log(error);
+      }
     }    
   };
 
@@ -53,7 +60,7 @@ export default function SignUpForm() {
           }}
         >
           <label htmlFor="file">
-            <UploadFile setFileDataURL={setFileDataURL} {...register('profileImage')} />
+            <UploadFile setFileDataURL={setFileDataURL} {...register('userImage')} />
             <ProfileImage imageUrl={fileDataURL} />
           </label>
           <Typography component="h1" variant="h5">

@@ -1,4 +1,4 @@
-import { Client, Account, Storage, Databases, ID } from "appwrite";
+import { Client, Account, Storage, Databases, ID, Query } from "appwrite";
 import config from "../config/config"
 
 class UserAuth {
@@ -16,55 +16,60 @@ class UserAuth {
         this.userDatabase = new Databases(this.client);
     }
 
-    async signup({ email, password, firstName, lastName, profileImage = [] }) {
+    async signup({ email, password, firstName, lastName, userImage = [] }) {
 
         const name = `${firstName} ${lastName}`;
 
         await this.account.create(ID.unique(), email, password, name);
 
-        const userAccount = await this.login(email, password);
+        const userAccountID = await this.login({email, password});
 
         if (profileImage.length > 0) {
-            const imageId = await this.uploadImage(profileImage[0]);
+            const imageId = await this.uploadImage(userImage[0]);
 
             await this.userDatabase.createDocument(config.appwriteDatabaseId, config.appwriteUserCollectionId, ID.unique(), {
-                userId: userAccount.$id,
-                userImage: imageId.$id
+                userId: userAccountID,
+                userImage: imageId
             })
         }
 
-        return userAccount.$id;
+        return userAccountID;
     }
 
-    async login(email, password) {
+    async login({email, password}) {
         const userAccount = await this.account.createEmailSession(email, password);
         return userAccount.$id;
     }
 
-    getActiveUser() {
-        return this.account.get();
+    async getActiveUser() {
+        try {
+            return await this.account.get();    
+        }
+        catch (error) {
+            return false;
+        }        
     }
 
     async logout() {
         await this.account.deleteSessions();
     }
 
-    async uploadImage(file) {
-        return await this.userStorage.createFile(config.appwriteStorageId, ID.unique(), file);
+    async uploadImage(image) {
+        const uploadedImage = await this.userStorage.createFile(config.appwriteStorageId, ID.unique(), image);
+        return uploadedImage.$id;
     }
 
-    async deleteImage(fileId) {
-        await this.userStorage.deleteFile(config.appwriteStorageId, fileId);
+    async getUserImageId(userId) {
+        const userData = await this.userDatabase.listDocuments(config.appwriteDatabaseId, config.appwriteUserCollectionId, [
+            Query.equal('userId', userId)
+        ]);
+        return userData.userImage;
     }
 
-    async updateImage(file, fileId = null) {
-        if (fileId) await this.deleteImage(fileId);
-        await this.uploadImage(file);
-    }
-
-    getImagePreview(fileId = null) {
-        if (fileId) {
-            return this.userStorage.getFilePreview(config.appwriteStorageId, fileId);
+    async getImagePreview(userId) {
+        const imageId = await this.getUserImageId(userId);
+        if (imageId) {
+            return this.userStorage.getFilePreview(config.appwriteStorageId, imageId);
         }
         else {
             return null;
