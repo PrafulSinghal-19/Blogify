@@ -5,7 +5,8 @@ import { ThemeProvider } from '@emotion/react';
 import { purple, red } from '@mui/material/colors';
 import { BlogImage, Input, UploadFile, RadioBtn, SubmitBtn, RTE, ErrorMessage } from '../index';
 import postServices from '../../appwrite/postServices';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addPost } from '../../store/postSlice';
 
 const theme = createTheme({
   palette: {
@@ -18,6 +19,8 @@ const PostForm = ({ post }) => {
 
   const [fileDataURL, setFileDataURL] = useState(null)
   const user = useSelector(state => state.auth.user);
+
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -36,8 +39,8 @@ const PostForm = ({ post }) => {
   const onSubmit = async(data) => {
     try {
       data['status'] = (data['status'] === 'true' ? true : false);
-      await postServices.createPost({ ...data }, user.$id, user.name);
-      console.log(user)
+      const post = await postServices.createPost({ ...data }, user.$id, user.name);
+      if (data['status']) dispatch(addPost(post));
     }
     catch (error) {
       console.log(error)

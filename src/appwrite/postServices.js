@@ -1,4 +1,4 @@
-import { Client, Databases, Storage, ID } from "appwrite";
+import { Client, Databases, Storage, ID, Query } from "appwrite";
 import config from "../config/config";
 
 class PostServices {
@@ -15,7 +15,7 @@ class PostServices {
     }
 
     //create a new post
-    async createPost({ title, content, status = true, image = []}, userId, userName) {
+    async createPost({ title, content, status = true, image = [] }, userId, userName) {
         const postObj = {
             title,
             content,
@@ -25,7 +25,7 @@ class PostServices {
         };
 
         //if image is not null upload it on the bucket
-        if (image.length>0) {
+        if (image.length > 0) {
             const imageId = await this.uploadImage(image[0]);
             postObj.featuredImage = imageId;
         }
@@ -35,13 +35,13 @@ class PostServices {
 
     }
 
-    async getPosts(Query=[Query.equal('status',true), Query.orderDesc("$createdAt")]) {
-        const activePosts = await this.postDatabase.listDocuments(config.appwriteDatabaseId, config.appwriteBlogCollectionId, Query);
+    async getPosts(query = [Query.equal('status', true), Query.orderDesc("$createdAt")]) {
+        const activePosts = await this.postDatabase.listDocuments(config.appwriteDatabaseId, config.appwriteBlogCollectionId, query);
 
-        return activePosts;
+        return activePosts.documents;
     }
 
-    async getPost(postId){
+    async getPost(postId) {
         const post = await this.postDatabase.getDocument(config.appwriteDatabaseId, config.appwriteBlogCollectionId, postId);
 
         return post;
@@ -92,6 +92,11 @@ class PostServices {
         if (imageId) await this.deleteImage(imageId);
         if (image) return await this.uploadImage(image)
         return null;
+    }
+
+    //Image preview
+    async getImagePreview(featuredImage) {
+        return this.postStorage.getFilePreview(config.appwriteStorageId, featuredImage);
     }
 }
 

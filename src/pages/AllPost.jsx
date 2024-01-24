@@ -1,6 +1,10 @@
+import React from 'react'
+import { Posts } from "../components/index"
 
 const AllPost = () => {
-    return <>AllPosts</>
+  return (
+    <Posts />
+  )
 }
 
-export default AllPost;
+export default AllPost

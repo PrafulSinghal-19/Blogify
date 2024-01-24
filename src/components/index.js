@@ -7,8 +7,10 @@ import Input from './Input/Input';
 import Loader from './Loader/Loader';
 import LoginForm from './LoginForm/LoginForm'
 import LogoutBtn from './LogoutBtn/LogoutBtn';
+import Post from './Post/Post';
 import PostCard from './PostCard/PostCard';
 import PostForm from './PostForm/PostForm';
+import Posts from './Posts/Posts';
 import ProfileImage from './ProfileImage/ProfileImage';
 import RadioBtn from './RadioBtn/RadioBtn';
 import RTE from './RTE/RTE';
@@ -27,8 +29,10 @@ export {
     Loader,
     LoginForm,
     LogoutBtn,
+    Post,
     PostCard,
     PostForm,
+    Posts,
     ProfileImage,
     RadioBtn,
     RTE,
