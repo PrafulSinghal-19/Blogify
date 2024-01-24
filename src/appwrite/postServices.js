@@ -1,4 +1,4 @@
-import { Client, Databases, Storage } from "appwrite";
+import { Client, Databases, Storage, ID } from "appwrite";
 import config from "../config/config";
 
 class PostServices {
@@ -15,12 +15,13 @@ class PostServices {
     }
 
     //create a new post
-    async createPost({ title, content, status = true, image = []}, userId) {
+    async createPost({ title, content, status = true, image = []}, userId, userName) {
         const postObj = {
             title,
             content,
             status,
-            userId
+            userId,
+            userName
         };
 
         //if image is not null upload it on the bucket
@@ -76,14 +77,14 @@ class PostServices {
 
     //upload an image
     async uploadImage(image) {
-        const uploadedImage = await this.userStorage.createFile(config.appwriteStorageId, ID.unique(), image);
+        const uploadedImage = await this.postStorage.createFile(config.appwriteStorageId, ID.unique(), image);
         return uploadedImage.$id;
     }
 
     //delete an image
     async deleteImage(imageId = null) {
         if (!imageId)
-            await this.userStorage.deleteFile(config.appwriteStorageId, imageId);
+            await this.postStorage.deleteFile(config.appwriteStorageId, imageId);
     }
 
     //update an image

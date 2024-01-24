@@ -22,23 +22,23 @@ class UserAuth {
 
         await this.account.create(ID.unique(), email, password, name);
 
-        const userAccountID = await this.login({email, password});
+        const userAccount = await this.login({email, password});
 
-        if (profileImage.length > 0) {
+        if (userImage.length > 0) {
             const imageId = await this.uploadImage(userImage[0]);
 
             await this.userDatabase.createDocument(config.appwriteDatabaseId, config.appwriteUserCollectionId, ID.unique(), {
-                userId: userAccountID,
+                userId: userAccount.$id,
                 userImage: imageId
             })
         }
 
-        return userAccountID;
+        return userAccount;
     }
 
     async login({email, password}) {
         const userAccount = await this.account.createEmailSession(email, password);
-        return userAccount.$id;
+        return userAccount;
     }
 
     async getActiveUser() {
@@ -46,6 +46,7 @@ class UserAuth {
             return await this.account.get();    
         }
         catch (error) {
+            console.log(error.message)
             return false;
         }        
     }

@@ -10,10 +10,10 @@ const Input = ({ name, required=true , id, label, control, errors, autoFocus=fal
       control={control}
       render={({ field: { onChange } }) => <TextField
         error= {errors[name] ?  true : false}
-        autoComplete='false'
         name={name}
         required
         fullWidth
+        color='primary'
         id={id}
         label={label}
         autoFocus={autoFocus}
@@ -21,7 +21,7 @@ const Input = ({ name, required=true , id, label, control, errors, autoFocus=fal
         onChange={onChange}
         helperText={ errors[name] ? errors[name].message : ""}
       />}
-      rules={{ required: `${name.toUpperCase()} required` }}
+      rules={required ? { required: `${name.toUpperCase()} required` } : null}
     />
 
   )

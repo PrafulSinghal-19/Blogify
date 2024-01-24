@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 
 const Footer = (props) => {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props} sx={{mt:10}}>
+    <Typography variant="body2" color="text.secondary" align="center" {...props} sx={{mt:10, mb:5}}>
       {'Copyright © '}
       <Link color="inherit" href="/">
         Blogify

@@ -3,7 +3,7 @@ import authService from "../appwrite/auth"
 
 const initialState = {
     userStatus: false,
-    userId: null,
+    user: null,
     error: "",
     promiseStatus: 'idle',
 }
@@ -12,7 +12,7 @@ export const getActiveUser = createAsyncThunk('user/status', async () => {
     try {
         const userAccount = await authService.getActiveUser();
         if (userAccount) {
-            return userAccount.$id;
+            return userAccount;
         }
         else {
             return false;
@@ -30,11 +30,11 @@ const authSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.userStatus = true;
-            state.userId = action.payload;
+            state.user = action.payload;
         },
         logout: (state, action) => {
             state.userStatus = false;
-            state.userId = null;
+            state.user = null;
         }
     },
     extraReducers(builder) {
@@ -43,7 +43,7 @@ const authSlice = createSlice({
         })
         builder.addCase(getActiveUser.fulfilled, (state, action) => {
             if (action.payload) {
-                state.userId = action.payload;
+                state.user = action.payload;
                 state.userStatus = true;
             }
             state.promiseStatus = 'fulfilled';

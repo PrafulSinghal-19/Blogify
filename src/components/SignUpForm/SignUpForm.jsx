@@ -23,8 +23,8 @@ export default function SignUpForm() {
 
   const onSubmit = async (data) => {
     try {
-      const userId = await authService.signup({ ...data });
-      dispatch(login(userId));
+      const user = await authService.signup({ ...data });
+      dispatch(login(user));
     }
     catch (error) {
       console.log(error.message);
@@ -37,13 +37,13 @@ export default function SignUpForm() {
     }    
   };
 
-  const { handleSubmit, control, register, watch, formState: { errors } } = useForm({
+  const { handleSubmit, control, register, formState: { errors } } = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
       password: "",
-      profileImage: []
+      userImage: []
     }
   });
 
