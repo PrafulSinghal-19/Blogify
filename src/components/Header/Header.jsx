@@ -11,21 +11,38 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../../store/authSlice";
 import authService from "../../appwrite/auth";
+
+import blogHeaderImage from "../../assets/blogHeaderImage.png";
+import userImage from "../../assets/user.png";
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null | HTMLElement)
   const [anchorElUser, setAnchorElUser] = useState(null | HTMLElement);
   const [pages, setPages] = useState([]);
   const [settings, setSettings] = useState([]);
+  const [image, setImage] = useState(userImage);
   const userState = useSelector(state => state.auth.userStatus);
+  const user = useSelector(state => state.auth.user);
+
+  const navigate = useNavigate();
 
   useEffect(() => { 
     if (userState) {
+      try {
+        (async () => {
+          const image = await authService.getImagePreview(user.$id);
+          if (image) setImage(image.href);
+        })();
+      }
+      catch (error) {
+        console.log(error.message);
+      }
+
       setPages([
         {
           page: 'Home',
@@ -48,6 +65,8 @@ function Header() {
       ]);
     }
     else {
+      setImage(userImage);
+      
       setPages([
         {
           page: 'Login',
@@ -78,6 +97,7 @@ function Header() {
     try {
       await authService.logout();
       dispatch(logout());
+      navigate('/login');
     }
     catch (error) {
       console.log(error.message)
@@ -104,7 +124,7 @@ function Header() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src='src/assets/blogHeaderImage.png' className='h-12' />
+          <img src={blogHeaderImage} className='h-12' />
           <Typography
             variant="h6"
             noWrap
@@ -190,7 +210,7 @@ function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="src/assets/user.png" />
+                <Avatar alt="Remy Sharp" src={image} />
               </IconButton>
             </Tooltip>
             <Menu

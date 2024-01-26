@@ -43,7 +43,6 @@ class PostServices {
 
     async getPost(postId) {
         const post = await this.postDatabase.getDocument(config.appwriteDatabaseId, config.appwriteBlogCollectionId, postId);
-
         return post;
     }
 
@@ -56,9 +55,8 @@ class PostServices {
         return userPosts;
     }
 
-    async updateDocument({ title, content, status = true, image = [] }, postId) {
-        const post = await this.getPost(postId);
-
+    async updateDocument({ title, content, status = true, image = [] }, postId, post) {
+        
         const imageId = await this.updateImage(post.featuredImage, image[0]);
 
         const updateObj = {
@@ -83,12 +81,13 @@ class PostServices {
 
     //delete an image
     async deleteImage(imageId = null) {
-        if (!imageId)
+        if (imageId)
             await this.postStorage.deleteFile(config.appwriteStorageId, imageId);
     }
 
     //update an image
     async updateImage(imageId = null, image = null) {
+        if (imageId && !image) return imageId;
         if (imageId) await this.deleteImage(imageId);
         if (image) return await this.uploadImage(image)
         return null;

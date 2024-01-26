@@ -1,8 +1,9 @@
 import React from 'react'
+import addImage from "../../assets/addImage.png";
 
 const BlogImage = ({ imageUrl = null }) => {
 
-    imageUrl = imageUrl || 'src/assets/addImage.png';
+    imageUrl = imageUrl || addImage;
     return (
         <img src={imageUrl} alt="preview" className='rounded-xl hover:cursor-pointer max-h-64' />
     )

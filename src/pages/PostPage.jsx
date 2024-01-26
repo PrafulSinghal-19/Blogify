@@ -1,10 +1,7 @@
-import React from 'react'
-import { PostForm } from "../components/index"
+import { Post} from "../components";
 
 const PostPage = () => {
-  return (
-    <PostForm />
-  )
+    return <Post />
 }
 
-export default PostPage
+export default PostPage;

@@ -20,9 +20,9 @@ class UserAuth {
 
         const name = `${firstName} ${lastName}`;
 
-        await this.account.create(ID.unique(), email, password, name);
+        const userAccount = await this.account.create(ID.unique(), email, password, name);
 
-        const userAccount = await this.login({email, password});
+        await this.login({ email, password });
 
         if (userImage.length > 0) {
             const imageId = await this.uploadImage(userImage[0]);
@@ -37,8 +37,8 @@ class UserAuth {
     }
 
     async login({email, password}) {
-        const userAccount = await this.account.createEmailSession(email, password);
-        return userAccount;
+        await this.account.createEmailSession(email, password);
+        return await this.getActiveUser();
     }
 
     async getActiveUser() {
@@ -64,7 +64,12 @@ class UserAuth {
         const userData = await this.userDatabase.listDocuments(config.appwriteDatabaseId, config.appwriteUserCollectionId, [
             Query.equal('userId', userId)
         ]);
-        return userData.userImage;
+        
+        if (userData.total != 0) {
+            return userData.documents[0].userImage;    
+        } else {
+            return null;
+        }        
     }
 
     async getImagePreview(userId) {

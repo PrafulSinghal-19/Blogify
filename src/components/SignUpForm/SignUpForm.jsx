@@ -32,7 +32,7 @@ export default function SignUpForm() {
         await userAuth.logout();
       }
       catch (error) {
-        console.log(error);
+        console.log(error.message);
       }
     }    
   };

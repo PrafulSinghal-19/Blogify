@@ -3,9 +3,9 @@ import Layout from "./pages/Layout"
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import AllPost from "./pages/AllPost"
-import Post from "./pages/Post"
-import ErrorPage from "./pages/ErrorPage"
 import PostPage from "./pages/PostPage"
+import ErrorPage from "./pages/ErrorPage"
+import CreatePage from "./pages/CreatePage"
 import UserInfo from "./pages/UserInfo"
 import AuthLayout from "./components/AuthLayout/AuthLayout"
 
@@ -29,12 +29,12 @@ const router = createBrowserRouter(
           element: <AuthLayout> <SignUp /> </AuthLayout>
         },
         {
-          path: '/post/:postId',
-          element: <AuthLayout authenticated={false}> <Post /></AuthLayout>
+          path: '/post/:id',
+          element: <AuthLayout authenticated={false}> <PostPage /></AuthLayout>
         },
         {
           path: '/createBlog',
-          element: <AuthLayout authenticated={false} > <PostPage /> </AuthLayout>
+          element: <AuthLayout authenticated={false} > <CreatePage /> </AuthLayout>
         },
         {
           path: '/userInfo',
