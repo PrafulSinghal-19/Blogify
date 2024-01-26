@@ -7,6 +7,7 @@ import Input from './Input/Input';
 import Loader from './Loader/Loader';
 import LoginForm from './LoginForm/LoginForm'
 import LogoutBtn from './LogoutBtn/LogoutBtn';
+import ModalComponent from './Modal/Modal';
 import Post from './Post/Post';
 import PostCard from './PostCard/PostCard';
 import PostForm from './PostForm/PostForm';
@@ -29,6 +30,7 @@ export {
     Loader,
     LoginForm,
     LogoutBtn,
+    ModalComponent,
     Post,
     PostCard,
     PostForm,

@@ -69,8 +69,9 @@ class PostServices {
         return await this.postDatabase.updateDocument(config.appwriteDatabaseId, config.appwriteBlogCollectionId, postId, updateObj);
     }
 
-    async deleteDocument(postId) {
-        await this.postDatabase(config.appwriteDatabaseId, config.appwriteBlogCollectionId, postId);
+    async deleteDocument(postId, featuredImage = null) {
+        await this.postDatabase.deleteDocument(config.appwriteDatabaseId, config.appwriteBlogCollectionId, postId);
+        if (featuredImage) await this.deleteImage(featuredImage);
     }
 
     //upload an image

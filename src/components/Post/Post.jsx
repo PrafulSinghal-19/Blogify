@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import postServices from "../../appwrite/postServices"
 import { Container, Typography, Box, IconButton, Divider } from '@mui/material';
-import { ErrorMessage } from "../index"
+import { ErrorMessage, PostForm, ModalComponent } from "../index"
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { PostForm } from "../index";
 import { AspectRatio } from '@mui/joy';
 import { sanitize } from "html-parser";
 import ReactHtmlParser from "react-html-parser";
+import { deletePost } from '../../store/postSlice';
 
 const Post = () => {
   const { id } = useParams();
@@ -18,7 +18,26 @@ const Post = () => {
   const [error, setError] = useState('');
   const [image, setImage] = useState(null);
   const [edit, setEdit] = useState(false);
+  const [open, setOpen] = useState(false);
   const user = useSelector(state => state.auth.user);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleDelete = async() => {
+    try {
+      await postServices.deleteDocument(post.$id, post.featuredImage);
+      dispatch(deletePost(post.$id));
+      handleClose();
+      navigate('/');
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  }
 
   useEffect(() => {
     if (post && post.featuredImage) {
@@ -37,6 +56,7 @@ const Post = () => {
           const post = await postServices.getPost(id);
           setPost(post);
         } catch (error) {
+
           setError(error.message);
         }
       })();
@@ -71,6 +91,7 @@ const Post = () => {
                 color: 'white'
               }
             }}
+              onClick={handleOpen}
               disabled={user.$id != post.userId}
             />
             <IconButton color='success' size='small' children={<EditIcon />} sx={{
@@ -85,6 +106,8 @@ const Post = () => {
             />
 
           </Box>
+
+          <ModalComponent open={open} handleClose={handleClose} handleDelete={handleDelete}/>
 
           <Typography variant='h4' sx={{ textAlign: 'center' }}>
             {post.title}

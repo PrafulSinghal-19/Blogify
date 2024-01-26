@@ -30,7 +30,7 @@ const postSlice = createSlice({
             state.posts = state.posts.map(post => ((post.$id === action.payload.$id) ? action.payload : post));
         },
         deletePost: (state, action) => {
-            state.posts = state.posts.filter(post => (post.$id !== action.payload.$id));
+            state.posts = state.posts.filter(post => (post.$id !== action.payload));
         }
     },
     extraReducers(builder) {
