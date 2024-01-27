@@ -27,7 +27,7 @@ const Post = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleDelete = async() => {
+  const handleDelete = async () => {
     try {
       await postServices.deleteDocument(post.$id, post.featuredImage);
       dispatch(deletePost(post.$id));
@@ -69,15 +69,17 @@ const Post = () => {
     <Container sx={{ my: '4vh' }}>
       {
         error &&
-        <>
-          <ErrorMessage error={error} />
-          <Typography>
-            Go Back To
-            <Link to="/">
-              Home Page
-            </Link>
-          </Typography>
-        </>
+        <Box sx={{ display: 'flex', justifyContent: 'center', height: '50vh' }}>
+          <Box sx={{ my: 'auto' }}>
+            <ErrorMessage error={error} color="text.secondary" />
+            <Typography variant="box2" color="text.secondary">
+              {`Go Back To `}
+              <Link to="/" className='text-sky-500 underline'>
+                Home Page
+              </Link>
+            </Typography>
+          </Box>
+        </Box>
       }
 
       {
@@ -107,7 +109,7 @@ const Post = () => {
 
           </Box>
 
-          <ModalComponent open={open} handleClose={handleClose} handleDelete={handleDelete}/>
+          <ModalComponent open={open} handleClose={handleClose} handleDelete={handleDelete} />
 
           <Typography variant='h4' sx={{ textAlign: 'center' }}>
             {post.title}

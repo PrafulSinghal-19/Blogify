@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material'
 import React from 'react'
 
-const ErrorMessage = ({ error }) => {
+const ErrorMessage = ({ error, color }) => {
     if (error) {
-        return(<Typography color="secondary" sx={{textAlign:'center'}}>{error}</Typography>)
+        return(<Typography color={color} variant="box2" sx={{textAlign:'center'}}>{error}</Typography>)
     }
     return <></>
 }

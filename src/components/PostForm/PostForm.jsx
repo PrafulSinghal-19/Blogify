@@ -89,7 +89,7 @@ const PostForm = ({ post, setEdit, image }) => {
           </Typography>
           <Input name="title" id="title" label="Title" control={control} errors={errors} autoFocus={true} defaultValue={watch('title')} sx={{ marginBottom: '2vh' }} />
           <RTE name="content" control={control} label="Content" defaultValue={watch('content')} />
-          <ErrorMessage error={errors['content']?.message} />
+          <ErrorMessage error={errors['content']?.message} color="secondary" />
           <Box sx={{ display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap', marginBottom: '7vh', marginTop: '5vh' }}>
             <label htmlFor="file" className="md:w-1/6 sm:w-1/2 flex flex-row content-center justify-center">
               <UploadFile setFileDataURL={setFileDataURL} {...register('image')} />

@@ -34,7 +34,6 @@ const Layout = () => {
         if (promiseStatus === "fulfilled" || promiseStatus === "rejected") {
             setLoading(false);
             if (authStatus) {
-                console.log(protectedRoutes.find(route => route.test(pathName)), pathName)
                 if (protectedRoutes.find(route => route.test(pathName))) navigate(pathName);
                 else navigate('/');
             }

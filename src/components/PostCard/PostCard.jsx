@@ -39,7 +39,8 @@ export default function PostCard({ post }) {
         '&:hover': {
           cursor: 'pointer',
           position: 'relative',
-          top: '-4px'
+          top: '-4px',
+          scale: '1.02'
         }
       }}
       onClick={() => {

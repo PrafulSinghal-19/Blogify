@@ -26,13 +26,13 @@ function Header() {
   const [pages, setPages] = useState([]);
   const [settings, setSettings] = useState([]);
   const [image, setImage] = useState(userImage);
-  const userState = useSelector(state => state.auth.userStatus);
+  const authStatus = useSelector(state => state.auth.userStatus);
   const user = useSelector(state => state.auth.user);
 
   const navigate = useNavigate();
 
   useEffect(() => { 
-    if (userState) {
+    if (authStatus) {
       try {
         (async () => {
           const image = await authService.getImagePreview(user.$id);
@@ -89,7 +89,7 @@ function Header() {
         }
       ]);
     }
-  }, [userState]);
+  }, [authStatus]);
 
   const dispatch = useDispatch();
 
@@ -137,7 +137,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            <Link to="/">
+            <Link to={authStatus ? '/' : '#'}>
               Blogify
             </Link>
           </Typography>
@@ -191,7 +191,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            <Link to="/">
+            <Link to={authStatus ? '/' : '#'}>
               Blogify
             </Link>
           </Typography>

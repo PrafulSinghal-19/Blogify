@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Input, SubmitBtn, ProfileImage } from "../index"
+import { Input, SubmitBtn, ProfileImage, PasswordInput } from "../index"
 import { useForm } from "react-hook-form"
 import { useDispatch } from 'react-redux';
 import { login } from "../../store/authSlice";
 import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
+import { Link } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -51,21 +51,23 @@ export default function LoginForm() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
+          <Box component="form" noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Input name='email' id='email' label='Email' type='email' autoFocus= {true} control={control} errors={errors} />
+                <Input name='email' id='email' label='Email' type='email' autoFocus={true} control={control} errors={errors} />
               </Grid>
               <Grid item xs={12}>
-                <Input name='password' id='password' label='Password' type='password' control={control} errors={errors} />
+                <PasswordInput name='password' id='password' label='Password' control={control} errors={errors} />
               </Grid>
             </Grid>
             <SubmitBtn text="Login" />
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  Don't have an account? SignUp
-                </Link>
+                <Typography variant="body2" color="primary">
+                  <Link to="/signup">
+                    Don't have an account? SignUp
+                  </Link>
+                </Typography>
               </Grid>
             </Grid>
           </Box>

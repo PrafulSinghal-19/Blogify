@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Input, SubmitBtn, UploadFile, ProfileImage } from "../index"
+import { Input, SubmitBtn, UploadFile, ProfileImage, PasswordInput } from "../index"
 import { useForm } from "react-hook-form"
 import CssBaseline from '@mui/material/CssBaseline';;
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -34,7 +34,7 @@ export default function SignUpForm() {
       catch (error) {
         console.log(error.message);
       }
-    }    
+    }
   };
 
   const { handleSubmit, control, register, formState: { errors } } = useForm({
@@ -66,7 +66,7 @@ export default function SignUpForm() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }} autoComplete='off'>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Input name='firstName' id='firstName' label='First Name' autoFocus={true} control={control} errors={errors} />
@@ -78,15 +78,17 @@ export default function SignUpForm() {
                 <Input name='email' id='email' label='Email' type='email' control={control} errors={errors} />
               </Grid>
               <Grid item xs={12}>
-                <Input name='password' id='password' label='Password' type='password' control={control} errors={errors} />
+                <PasswordInput name='password' id='password' label='Password' control={control} errors={errors} />
               </Grid>
             </Grid>
             <SubmitBtn text='SignUp' />
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
-                  Already have an account? Login
-                </Link>
+                <Typography variant="body2" color="primary">
+                  <Link to="/login">
+                    Already have an account? Login
+                  </Link>
+                </Typography>
               </Grid>
             </Grid>
           </Box>
