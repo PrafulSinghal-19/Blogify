@@ -7,7 +7,6 @@ import PostPage from "./pages/PostPage"
 import ErrorPage from "./pages/ErrorPage"
 import CreatePage from "./pages/CreatePage"
 import UserInfo from "./pages/UserInfo"
-import AuthLayout from "./components/AuthLayout/AuthLayout"
 
 const router = createBrowserRouter(
   [
@@ -18,27 +17,27 @@ const router = createBrowserRouter(
       children: [
         {
           path: '/',
-          element: <AuthLayout authenticated={false}> <AllPost /></AuthLayout>
+          element: <AllPost />
         },
         {
           path: '/login',
-          element: <AuthLayout> <Login /> </AuthLayout>
+          element: <Login />
         },
         {
           path: '/signup',
-          element: <AuthLayout> <SignUp /> </AuthLayout>
+          element: <SignUp />
         },
         {
           path: '/post/:id',
-          element: <AuthLayout authenticated={false}> <PostPage /></AuthLayout>
+          element: <PostPage />
         },
         {
           path: '/createBlog',
-          element: <AuthLayout authenticated={false} > <CreatePage /> </AuthLayout>
+          element: <CreatePage /> 
         },
         {
           path: '/userInfo',
-          element: <AuthLayout authenticated={false}><UserInfo /></AuthLayout>
+          element: <UserInfo />
         }
       ]
     }

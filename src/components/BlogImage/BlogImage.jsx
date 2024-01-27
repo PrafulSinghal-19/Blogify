@@ -5,7 +5,7 @@ const BlogImage = ({ imageUrl = null }) => {
 
     imageUrl = imageUrl || addImage;
     return (
-        <img src={imageUrl} alt="preview" className='rounded-xl hover:cursor-pointer max-h-64' />
+        <img src={imageUrl} alt="preview" className='rounded-md hover:cursor-pointer max-h-56' />
     )
 }
 

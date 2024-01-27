@@ -31,7 +31,8 @@ export default function ModalComponent({ open, handleClose, handleDelete }) {
                     <Typography id="modal-modal-description" sx={{ mt: 2, mb: 1.5 }}>
                         Are you sure you want to delete this blog?
                     </Typography>
-                    <Button size="small" color="error" variant="contained" onClick={handleDelete}>Delete</Button>
+                    <Button size="small" color="error" variant="contained" onClick={handleDelete}>Yes</Button>
+                    <Button size="small" color="success" variant="contained" onClick={handleClose} sx={{ml: 2}}>No</Button>
                 </Box>
             </Modal>
         </div>

@@ -1,4 +1,3 @@
-import AuthLayout from './AuthLayout/AuthLayout';
 import BlogImage from './BlogImage/BlogImage';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import Footer from './Footer/Footer';
@@ -21,7 +20,6 @@ import { UploadFile } from './UploadFile/UploadFile';
 
 
 export {
-    AuthLayout,
     BlogImage,
     ErrorMessage,
     Footer,

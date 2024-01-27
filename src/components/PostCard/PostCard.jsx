@@ -59,7 +59,7 @@ export default function PostCard({ post }) {
         </Typography>
         <Typography level="body-md" sx={{ marginBottom: '15px' }}>
           {
-            `${htmlToText(post.content).slice(0,200)} ...`
+            `${htmlToText(post.content).slice(0,100)} ...`
           }
         </Typography>
         <Typography variant='body2' color='text.secondary' sx={{ textAlign: 'right' }}>

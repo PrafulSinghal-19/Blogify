@@ -2,7 +2,6 @@ import { useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
   const error = useRouteError();
-  console.error(error.message);
 
   return (
     <div id="error-page" className="text-center mt-10">
